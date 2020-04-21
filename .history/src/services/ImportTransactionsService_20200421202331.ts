@@ -78,12 +78,6 @@ class ImportTransactionsService {
         ),
       })),
     );
-
-    await transectionRepository.save(createdTransetions);
-
-    await fs.promises.unlink(filePath);
-
-    return createdTransetions;
   }
 }
 

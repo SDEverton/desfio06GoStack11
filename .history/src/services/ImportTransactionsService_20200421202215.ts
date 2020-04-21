@@ -73,17 +73,8 @@ class ImportTransactionsService {
         title: transaction.title,
         type: transaction.type,
         value: transaction.value,
-        category: finalCategories.find(
-          category => category.title === transaction.category,
-        ),
       })),
     );
-
-    await transectionRepository.save(createdTransetions);
-
-    await fs.promises.unlink(filePath);
-
-    return createdTransetions;
   }
 }
 

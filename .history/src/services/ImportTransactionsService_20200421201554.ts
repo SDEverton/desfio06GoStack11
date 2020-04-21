@@ -59,31 +59,12 @@ class ImportTransactionsService {
       .filter((value, index, self) => self.indexOf(value) === index);
 
     const newCategories = categoriesRepository.create(
-      addCategoryTitles.map(title => ({
+      addCategoryTitles.addCategoryTitles(title => ({
         title,
       })),
     );
 
     await categoriesRepository.save(newCategories);
-
-    const finalCategories = [...newCategories, ...existentCategories];
-
-    const createdTransetions = transectionRepository.create(
-      transections.map(transaction => ({
-        title: transaction.title,
-        type: transaction.type,
-        value: transaction.value,
-        category: finalCategories.find(
-          category => category.title === transaction.category,
-        ),
-      })),
-    );
-
-    await transectionRepository.save(createdTransetions);
-
-    await fs.promises.unlink(filePath);
-
-    return createdTransetions;
   }
 }
 

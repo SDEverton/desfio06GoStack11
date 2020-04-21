@@ -69,21 +69,14 @@ class ImportTransactionsService {
     const finalCategories = [...newCategories, ...existentCategories];
 
     const createdTransetions = transectionRepository.create(
-      transections.map(transaction => ({
-        title: transaction.title,
-        type: transaction.type,
-        value: transaction.value,
-        category: finalCategories.find(
-          category => category.title === transaction.category,
-        ),
-      })),
+      transections.map(transaction =>
+        transaction.map(transaction => ({
+          title: transaction.title,
+          type: transaction.type,
+          value: transaction.value,
+        })),
+      ),
     );
-
-    await transectionRepository.save(createdTransetions);
-
-    await fs.promises.unlink(filePath);
-
-    return createdTransetions;
   }
 }
 
